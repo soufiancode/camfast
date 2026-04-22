@@ -1,4 +1,4 @@
-# CAMFAST 🎯
+# CAMFAST 📸
 **Advanced & Lightweight Screenshot & Screen Recorder**
 
 ---
