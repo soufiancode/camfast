@@ -1,0 +1,44 @@
+{
+  "name": "camfast",
+  "version": "1.0.0",
+  "description": "Lightweight screenshot & screen recorder",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --x64"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.camfast.app",
+    "productName": "CAMFAST",
+    "directories": {
+      "output": "dist"
+    },
+    "asarUnpack": [
+      "node_modules/ffmpeg-static/**/*"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "src/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "CAMFAST",
+      "createDesktopShortcut": true
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ]
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.3.0"
+  }
+}

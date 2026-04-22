@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: transparent;
+      cursor: crosshair;
+    }
+
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    #selection {
+      position: fixed;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(0,0,0,0.3);
+      display: none;
+      pointer-events: none;
+    }
+
+    /* Corner handles */
+    #selection::before,
+    #selection::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #fff;
+    }
+
+    #selection::before { top: -4px; left: -4px; }
+    #selection::after { bottom: -4px; right: -4px; }
+
+    #dims {
+      position: fixed;
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      padding: 3px 7px;
+      border-radius: 3px;
+      pointer-events: none;
+      display: none;
+      letter-spacing: 1px;
+    }
+
+    #hint {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: rgba(255,255,255,0.7);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      pointer-events: none;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+    }
+
+    #hint span {
+      display: block;
+      text-align: center;
+      font-size: 10px;
+      margin-top: 6px;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <div id="overlay"></div>
+  <div id="selection"></div>
+  <div id="dims"></div>
+  <div id="hint">
+    Drag to select area
+    <span>ESC to cancel</span>
+  </div>
+
+  <script>
+    let startX, startY, isDrawing = false;
+    const sel = document.getElementById('selection');
+    const dims = document.getElementById('dims');
+    const hint = document.getElementById('hint');
+
+    document.addEventListener('mousedown', (e) => {
+      startX = e.screenX;
+      startY = e.screenY;
+      isDrawing = true;
+      hint.style.display = 'none';
+      sel.style.display = 'block';
+      dims.style.display = 'block';
+      updateSelection(e.screenX, e.screenY);
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDrawing) return;
+      updateSelection(e.screenX, e.screenY);
+    });
+
+    document.addEventListener('mouseup', (e) => {
+      if (!isDrawing) return;
+      isDrawing = false;
+
+      const x = Math.min(startX, e.screenX);
+      const y = Math.min(startY, e.screenY);
+      const w = Math.abs(e.screenX - startX);
+      const h = Math.abs(e.screenY - startY);
+
+      if (w < 5 || h < 5) {
+        window.api.send('crop-cancelled');
+        return;
+      }
+
+      window.api.send('crop-selected', { x, y, w, h });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        window.api.send('crop-cancelled');
+      }
+    });
+
+    function updateSelection(curX, curY) {
+      const x = Math.min(startX, curX);
+      const y = Math.min(startY, curY);
+      const w = Math.abs(curX - startX);
+      const h = Math.abs(curY - startY);
+
+      sel.style.left = x + 'px';
+      sel.style.top = y + 'px';
+      sel.style.width = w + 'px';
+      sel.style.height = h + 'px';
+
+      dims.textContent = `${w} × ${h}`;
+      dims.style.left = (x + w / 2 - 35) + 'px';
+      dims.style.top = (y - 22) + 'px';
+      if (y < 25) dims.style.top = (y + h + 5) + 'px';
+    }
+  </script>
+</body>
+</html>

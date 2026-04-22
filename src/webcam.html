@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      padding: 6px;
+      overflow: hidden;
+      background: transparent;
+      width: 100vw;
+      height: 100vh;
+    }
+    .container {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      -webkit-app-region: drag;
+      position: relative;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+      background: rgba(0, 0, 0, 0.6);
+      transition: border-color 0.2s;
+    }
+    .container:hover { border-color: rgba(255, 255, 255, 0.8); }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scaleX(-1);
+      pointer-events: none;
+      display: block;
+    }
+    #error-msg {
+      display: none;
+      position: absolute;
+      inset: 0;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 12px;
+      text-align: center;
+      padding: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <video id="video" autoplay muted playsinline></video>
+    <div id="error-msg">No camera found or access denied</div>
+  </div>
+
+  <script>
+    let currentStream = null;
+
+    window.api.on('set-webcam-device', async (deviceId) => {
+      // وقف الستريم القديم
+      if (currentStream) {
+        currentStream.getTracks().forEach(t => t.stop());
+        currentStream = null;
+      }
+
+      const videoEl = document.getElementById('video');
+      const errEl = document.getElementById('error-msg');
+      errEl.style.display = 'none';
+
+      const constraints = {
+        video: (deviceId && deviceId !== 'default')
+          ? { width: { ideal: 1280 }, height: { ideal: 720 }, deviceId: { exact: deviceId } }
+          : { width: { ideal: 1280 }, height: { ideal: 720 } }
+      };
+
+      try {
+        currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+        videoEl.srcObject = currentStream;
+      } catch (err) {
+        console.error('Webcam error:', err.name, err.message);
+        // Fallback: نجرب بدون deviceId محدد
+        if (deviceId && deviceId !== 'default') {
+          try {
+            currentStream = await navigator.mediaDevices.getUserMedia({ video: true });
+            videoEl.srcObject = currentStream;
+          } catch (e) {
+            console.error('Fallback failed:', e.name, e.message);
+            errEl.style.display = 'flex';
+          }
+        } else {
+          errEl.style.display = 'flex';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
