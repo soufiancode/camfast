@@ -5,7 +5,7 @@ Built with Electron, Node.js & FFmpeg | Modern UI
 ---
 
 ### 📥 Direct Download
-[Download CamFast.exe (64-bit)](https://github.com/soufiancode/camfast/releases/download/v1.0.0/camfast.exe)
+[Download CamFast.exe (64-bit)](https://github.com/soufiancode/camfast/releases/download/v1.0.0/CAMFAST.Setup.1.0.0.exe)
 
 ---
 
