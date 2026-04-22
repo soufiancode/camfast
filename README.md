@@ -1,11 +1,15 @@
 # CAMFAST 🎯
-**Advanced & Lightweight Screenshot & Screen Recorder — Windows**
-Built with Electron, Node.js & FFmpeg | Modern UI
+**Advanced & Lightweight Screenshot & Screen Recorder**
+![Windows Support](https://img.shields.io/badge/Platform-Windows-blue?logo=windows)
+![Arch](https://img.shields.io/badge/Architecture-x64-orange)
+
+> [!IMPORTANT]
+> **This application is only for Windows (64-bit).** It is not compatible with macOS or Linux.
 
 ---
 
 ### 📥 Direct Download
-[Download CamFast.exe (64-bit)](https://github.com/soufiancode/camfast/releases/download/v1.0.0/CAMFAST.Setup.1.0.0.exe)
+[Download CamFast.exe for Windows (64-bit) ]( https://github.com/soufiancode/camfast/releases/download/v1.0.0/CAMFAST.Setup.1.0.0.exe)
 
 ---
 
