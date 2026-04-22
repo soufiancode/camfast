@@ -6,6 +6,11 @@
 ### 📥 Direct Download
 [Download CamFast.exe for Windows (64-bit)](https://github.com/soufiancode/camfast/releases/download/v1.0.0/CAMFAST.Setup.1.0.0.exe)
 
+
+| SHOT  | REC | SET |
+| :---: | :---: | :---: |
+| ![UI 1](assets/SHOT.png) | ![UI 2](assets/REC.png) | ![UI 2](assets/SET.png) |
+
 ---
 
 ## 📁 Project Structure
