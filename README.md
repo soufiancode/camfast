@@ -1,11 +1,5 @@
 # CAMFAST 🎯
 **Advanced & Lightweight Screenshot & Screen Recorder**
-![Windows Support](https://img.shields.io/badge/Platform-Windows-blue?logo=windows)
-![Arch](https://img.shields.io/badge/Architecture-x64-orange)
-
-> [!IMPORTANT]
-> **This application is only for Windows (64-bit).** It is not compatible with macOS or Linux.
-
 ---
 
 ### 📥 Direct Download
