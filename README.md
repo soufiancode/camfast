@@ -6,6 +6,9 @@
 ### 📥 Direct Download
 [Download CamFast.exe for Windows (64-bit)](https://github.com/soufiancode/camfast/releases/download/v1.0.0/CAMFAST.Setup.1.0.0.exe)
 
+---
+
+## 🖼️ App Interface & Design
 
 | SHOT  | REC | SET |
 | :---: | :---: | :---: |
